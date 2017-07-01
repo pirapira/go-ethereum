@@ -131,9 +131,9 @@ func (in *Interpreter) Run(snapshot int, contract *Contract, input []byte) (ret 
 		}
 	}()
 
-	log.Debug("interpreter running contract", "hash", codehash[:])
+	log.Debug("interpreter running contract", "hash", codehash, "depth", in.evm.depth)
 	tstart := time.Now()
-	defer log.Debug("interpreter finished running contract", "hash", codehash[:], "elapsed", time.Since(tstart))
+	defer log.Debug("interpreter finished running contract", "hash", codehash, "elapsed", time.Since(tstart))
 
 	// The Interpreter main run loop (contextual). This loop runs until either an
 	// explicit STOP, RETURN or SELFDESTRUCT is executed, an error occurred during
