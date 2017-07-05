@@ -130,13 +130,13 @@ func (tm *testMatcher) findSkip(name string) (reason string, skipload bool) {
 	if testing.Short() {
 		for _, re := range tm.skipshortpat {
 			if re.MatchString(name) {
-				return "skipped in -short mode", true
+				return "skipped in -short mode", false
 			}
 		}
 	}
 	for _, re := range tm.skiploadpat {
 		if re.MatchString(name) {
-			return "skipped by skipLoad", false
+			return "skipped by skipLoad", true
 		}
 	}
 	return "", false
@@ -189,7 +189,7 @@ func (tm *testMatcher) walk(t *testing.T, dir string, runTest interface{}) {
 	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		name := filepath.ToSlash(strings.TrimPrefix(path, dir+string(filepath.Separator)))
 		if info.IsDir() {
-			if _, skipload := tm.findSkip(name); skipload {
+			if _, skipload := tm.findSkip(name + "/"); skipload {
 				return filepath.SkipDir
 			}
 			return nil

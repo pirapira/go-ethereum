@@ -25,14 +25,23 @@ func TestState(t *testing.T) {
 	t.Parallel()
 
 	st := new(testMatcher)
-	st.fails(`^stTransactionTest/OverflowGasRequire\.json`, "gasLimit is > 256 bits")
-	st.fails(`^stZeroKnowledge/.*/Metropolis`, "metropolis not supported yet")
+	st.skipLoad(`^stTransactionTest/OverflowGasRequire\.json`) // gasLimit > 256 bits
+	st.skipLoad(`^stStackTests/shallowStackOK\.json`)          // bad hex encoding
+	st.skipLoad(`^stTransactionTest/zeroSigTransa.*\.json`)    // metropolis-related
+	// Expected failures:
+	st.fails(`^stCodeSizeLimit/codesizeOOGInvalidSize\.json/(Frontier|Homestead)`,
+		"code size limit implementation is not conditional on fork")
+	st.fails(`^stCallCreateCallCodeTest/createJS_ExampleContract.json`,
+		"bug in test")
 
 	st.walk(t, stateTestDir, func(t *testing.T, test *StateTest) {
 		for _, subtest := range test.Subtests() {
 			subtest := subtest
 			name := fmt.Sprintf("%s/%d", subtest.Fork, subtest.Index)
 			t.Run(name, func(t *testing.T) {
+				if subtest.Fork == "Metropolis" {
+					t.Skip("metropolis not supported yet")
+				}
 				if err := st.checkFailure(t, test.Run(subtest)); err != nil {
 					t.Error(err)
 				}

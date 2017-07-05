@@ -27,13 +27,17 @@ func TestBlockchain(t *testing.T) {
 	t.Parallel()
 
 	bt := new(testMatcher)
+	// General state tests are 'exported' as blockchain tests, but we can run them natively.
 	bt.skipLoad(`^GeneralStateTests/`)
+	// Skip random failures due to selfish mining test.
+	bt.skipLoad(`bcForkUncle\.json/ForkUncle`)
+	bt.skipLoad(`^bcMultiChainTest\.json/ChainAtoChainB_blockorder`)
+	bt.skipLoad(`^bcTotalDifficultyTest\.json/(lotsOfLeafs|lotsOfBranches|sideChainWithMoreTransactions)$`)
+	bt.skipLoad(`^bcMultiChainTest\.json/CallContractFromNotBestBlock`)
+	// Expected failures:
 	bt.fails(`(?i)metropolis`, "metropolis is not supported yet")
-	bt.fails(`^bcMultiChainTest.json/ChainAtoChainB_blockorder`, "fails because of selfish mining fix")
-	bt.fails(`^bcForkUncle.json/ForkUncle`, "fails because of selfish mining fix")
-	bt.fails(`^bcTotalDifficultyTest.json/(lotsOfLeafs|lotsOfBranches|sideChainWithMoreTransactions)$`, "fails because of selfish mining fix")
-	bt.fails(`^bcMultiChainTest.json/CallContractFromNotBestBlock`, "fails because of selfish mining fix")
-	bt.fails(`^TestNetwork/bcTheDaoTest.json/(DaoTransactions|DaoTransactions_UncleExtradata)`, "issue in test")
+	bt.fails(`^TestNetwork/bcTheDaoTest\.json/(DaoTransactions$|DaoTransactions_UncleExtradata$)`, "issue in test")
+
 	bt.config(`^TestNetwork/`, params.ChainConfig{
 		HomesteadBlock: big.NewInt(5),
 		DAOForkBlock:   big.NewInt(8),
