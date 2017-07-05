@@ -42,6 +42,9 @@ func TestState(t *testing.T) {
 				if subtest.Fork == "Metropolis" {
 					t.Skip("metropolis not supported yet")
 				}
+				if subtest.Index != 7 {
+					t.Skip("not interested in anything except 7")
+				}
 				if err := st.checkFailure(t, test.Run(subtest)); err != nil {
 					t.Error(err)
 				}
