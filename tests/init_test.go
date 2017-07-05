@@ -194,7 +194,7 @@ func (tm *testMatcher) walk(t *testing.T, dir string, runTest interface{}) {
 			}
 			return nil
 		}
-		if filepath.Ext(path) == ".json" {
+		if filepath.Base(path) == "RevertDepthCreateAddressCollision.json" {
 			t.Run(name, func(t *testing.T) { tm.runTestFile(t, path, runTest) })
 		}
 		return nil
