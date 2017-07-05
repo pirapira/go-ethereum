@@ -39,11 +39,11 @@ func TestState(t *testing.T) {
 			subtest := subtest
 			name := fmt.Sprintf("%s/%d", subtest.Fork, subtest.Index)
 			t.Run(name, func(t *testing.T) {
-				if subtest.Fork == "Metropolis" {
-					t.Skip("metropolis not supported yet")
+				if subtest.Fork != "EIP150" {
+					t.Skip("only interested in EIP150")
 				}
-				if subtest.Index != 7 {
-					t.Skip("not interested in anything except 7")
+				if subtest.Index != 6 {
+					t.Skip("not interested in anything except 6")
 				}
 				if err := st.checkFailure(t, test.Run(subtest)); err != nil {
 					t.Error(err)
