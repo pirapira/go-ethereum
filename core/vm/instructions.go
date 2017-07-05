@@ -489,6 +489,7 @@ func opSstore(pc *uint64, evm *EVM, contract *Contract, memory *Memory, stack *S
 	loc := common.BigToHash(stack.pop())
 	val := stack.pop()
 	evm.StateDB.SetState(contract.Address(), loc, common.BigToHash(val))
+	fmt.Printf("sstore  address: %v, location: %v, value: %v\n", contract.Address(), loc, common.BigToHash(val))
 
 	evm.interpreter.intPool.put(val)
 	return nil, nil
