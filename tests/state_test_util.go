@@ -194,6 +194,9 @@ func (t *StateTest) Run(subtest StateSubtest) error {
 	fmt.Printf("code at the problematic address b0 %v\n", statedb.GetCode(common.HexToAddress("0xb000000000000000000000000000000000000000")))
 	fmt.Printf("balance at the problematic address b0 %v\n", statedb.GetBalance(common.HexToAddress("0xb000000000000000000000000000000000000000")))
 	fmt.Printf("nonce at the problematic address b0 %v\n", statedb.GetNonce(common.HexToAddress("0xb000000000000000000000000000000000000000")))
+	fmt.Printf("balance at the problematic address a9 %v\n", statedb.GetBalance(common.HexToAddress("0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b")))
+	fmt.Printf("nonce at the problematic address a9 %v\n", statedb.GetNonce(common.HexToAddress("0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b")))
+	fmt.Printf("balance at the problematic address 2a %v\n", statedb.GetBalance(common.HexToAddress("0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba")))
 	root, _ := statedb.CommitTo(db, config.IsEIP158(block.Number()))
 	if root != common.Hash(post.Root) {
 		return fmt.Errorf("post state root mismatch: got %x, want %x", root, post.Root)
