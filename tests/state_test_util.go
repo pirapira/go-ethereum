@@ -188,9 +188,12 @@ func (t *StateTest) Run(subtest StateSubtest) error {
 			return err
 		}
 	}
-	fmt.Printf("code at the problematic address %v\n", statedb.GetCode(common.HexToAddress("0x3e180b1862f9d158abb5e519a6d8605540c23682")))
-	fmt.Printf("balance at the problematic address %v\n", statedb.GetBalance(common.HexToAddress("0x3e180b1862f9d158abb5e519a6d8605540c23682")))
-	fmt.Printf("nonce at the problematic address %v\n", statedb.GetNonce(common.HexToAddress("0x3e180b1862f9d158abb5e519a6d8605540c23682")))
+	fmt.Printf("code at the problematic address 3e %v\n", statedb.GetCode(common.HexToAddress("0x3e180b1862f9d158abb5e519a6d8605540c23682")))
+	fmt.Printf("balance at the problematic address 3e %v\n", statedb.GetBalance(common.HexToAddress("0x3e180b1862f9d158abb5e519a6d8605540c23682")))
+	fmt.Printf("nonce at the problematic address 3e %v\n", statedb.GetNonce(common.HexToAddress("0x3e180b1862f9d158abb5e519a6d8605540c23682")))
+	fmt.Printf("code at the problematic address b0 %v\n", statedb.GetCode(common.HexToAddress("0xb000000000000000000000000000000000000000")))
+	fmt.Printf("balance at the problematic address b0 %v\n", statedb.GetBalance(common.HexToAddress("0xb000000000000000000000000000000000000000")))
+	fmt.Printf("nonce at the problematic address b0 %v\n", statedb.GetNonce(common.HexToAddress("0xb000000000000000000000000000000000000000")))
 	root, _ := statedb.CommitTo(db, config.IsEIP158(block.Number()))
 	if root != common.Hash(post.Root) {
 		return fmt.Errorf("post state root mismatch: got %x, want %x", root, post.Root)
