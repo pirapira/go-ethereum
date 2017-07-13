@@ -194,7 +194,7 @@ func (tm *testMatcher) walk(t *testing.T, dir string, runTest interface{}) {
 			}
 			return nil
 		}
-		if filepath.Ext(path) == ".json" {
+		if filepath.Base(path) == "createJS_ExampleContract.json" {
 			t.Run(name, func(t *testing.T) { tm.runTestFile(t, path, name, runTest) })
 		}
 		return nil
