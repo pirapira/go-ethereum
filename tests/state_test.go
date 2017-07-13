@@ -37,8 +37,6 @@ func TestState(t *testing.T) {
 	st.skipLoad(`^stTransactionTest/zeroSigTransa[^/]*\.json`) // EIP-86 is not supported yet
 	// Expected failures:
 	st.fails(`^stCallCreateCallCodeTest/createJS_ExampleContract\.json`, "bug in test")
-	st.fails(`^stCodeSizeLimit/codesizeOOGInvalidSize\.json/(Frontier|Homestead)`,
-		"code size limit implementation is not conditional on fork")
 	st.fails(`^stRevertTest/RevertDepthCreateAddressCollision\.json/EIP15[08]/[67]`, "bug in test")
 	st.fails(`^stRevertTest/RevertPrecompiledTouch\.json/EIP158`, "bug in test")
 	st.fails(`^stRevertTest/RevertPrefoundEmptyOOG\.json/EIP158`, "bug in test")
