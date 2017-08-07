@@ -127,19 +127,11 @@ func (tm *testMatcher) config(pattern string, cfg params.ChainConfig) {
 
 // findSkip matches name against test skip patterns.
 func (tm *testMatcher) findSkip(name string) (reason string, skipload bool) {
-	if testing.Short() {
-		for _, re := range tm.skipshortpat {
-			if re.MatchString(name) {
-				return "skipped in -short mode", false
-			}
-		}
+	if regexp.MustCompile(`walletReorg`).MatchString(name) {
+		return "", false
+	} else {
+		return "being lazy for investigation", true
 	}
-	for _, re := range tm.skiploadpat {
-		if re.MatchString(name) {
-			return "skipped by skipLoad", true
-		}
-	}
-	return "", false
 }
 
 // findConfig returns the chain config matching defined patterns.
